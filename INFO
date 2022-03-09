@@ -1,0 +1,24 @@
+==========
+== INFO ==
+==========
+
+An Instagram bot, that scrapes all images an account has published.
+
+== configurable ==
+''''''''''''''''''
+- accounts(usernames)
+- since (datetime)
+- until (datetime)
+- save path (folder)
+
+== process ==
+'''''''''''''
+1. check if newest post was not already downloaded
+2. download newest picture
+3. download pictures, until the latest,
+   already downloaded picture is found, then stop
+
+== INSTALOADER ==
+'''''''''''''''''
+fork instaloader, I just need to download pictures from a few select accounts,
+archival purposes
