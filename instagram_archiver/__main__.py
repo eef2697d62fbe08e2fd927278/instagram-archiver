@@ -1,18 +1,26 @@
-import json
-from pathlib import Path
+from os.path import exists
+import argparse
 
 import instaloader
 
-ROOT = Path(__file__).parents[1]
-settings = json.loads(Path(ROOT / 'settings.json').read_text('UTF-8'))
-save_path = settings['save_path']
+from . import files, metadata
 
 
 def main():
-    loader = instaloader.Instaloader()
-    loader.interactive_login(settings['account'])
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--settings', help='Path to the settings json file')
+    args = parser.parse_args()
+    if not args['--settings']:
+        raise RuntimeError
+    if not exists(args['--settings']):
+        raise FileNotFoundError
 
-    for username in settings['usernames']:
+    settings = metadata.get_settings(args['--settings'])
+
+    loader = instaloader.Instaloader()
+    loader.interactive_login(settings.account)
+
+    for username in settings.usernames:
         profile = instaloader.Profile.from_username(loader.context, username)
         for post in profile.get_posts():
             time = post.date_utc
