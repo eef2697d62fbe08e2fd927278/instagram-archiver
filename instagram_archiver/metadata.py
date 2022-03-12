@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 class Settings:
-    def __init__(self, account_username: str, usernames: List[int], save_path: str):
-        self.account_username = account_username
+    def __init__(self, account: str, usernames: List[int], save_path: str):
+        self.account = account
         self.usernames = usernames
         self.save_path = Path(save_path)
 
@@ -17,7 +17,7 @@ class Settings:
 def get_settings(file_path):
     settings = json.loads(Path(file_path).read_text('UTF-8'))
     return Settings(
-        account_username=settings['account_username'],
+        account=settings['account'],
         usernames=settings['usernames'],
         save_path=settings['save_path']
     )
