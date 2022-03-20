@@ -4,7 +4,7 @@ from pathlib import Path
 
 from instaloader import Post
 
-from instagram_archiver import metadata
+from instagram_archiver import metadata, MONTH_FORMAT, TIME_IN_FILENAME_FORMAT
 
 
 def create_folders(settings: metadata.Settings):
@@ -15,7 +15,6 @@ def create_folders(settings: metadata.Settings):
 
 def get_save_path(post: Post, settings: metadata.Settings) -> Path:
     time = post.date_utc
-    post.owner_username
-    month_name = time.strftime('%m-%b').lower()
-    filename = '{}_{}'.format(time.strftime('%a-%d_%H-%M'), post.pcaption)
+    month_name = time.strftime(MONTH_FORMAT).lower()
+    filename = '{}_{}'.format(time.strftime(TIME_IN_FILENAME_FORMAT), post.pcaption)
     return Path(settings.save_path / post.owner_username / month_name / filename)

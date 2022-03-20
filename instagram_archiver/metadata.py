@@ -1,8 +1,11 @@
 # read metadata and similar etc.
+import datetime
 import os
 import json
 from typing import List
 from pathlib import Path
+
+from instagram_archiver import DATE_FORMAT
 
 
 class Settings:
@@ -23,5 +26,22 @@ def get_settings(file_path):
     )
 
 
-# TODO: create mechanism that saves the datetime when last was scraped,
-#  so it will only scrape images newer than said date
+class AccountMetadata:
+    FILENAME = 'meta.json'
+
+    def __init__(self, username: str, last_scraped_date: datetime.datetime):
+        self.username = username
+        self.last_scraped_date = last_scraped_date
+
+    @classmethod
+    def load(cls, save_path: Path, username: str):
+        with open(save_path / username / cls.FILENAME, mode='r', encoding='UTF-8') as file:
+            data = json.loads(file.read())
+
+        return AccountMetadata(username, data['last_scraped'])
+
+    def save(self, save_path: Path):
+        data = {'last_scraped': self.last_scraped_date.strftime(DATE_FORMAT)}
+
+        with open(save_path / self.username / self.FILENAME, mode='w', encoding='UTF-8') as file:
+            file.write(json.dumps(data))
