@@ -12,7 +12,7 @@ def main():
     parser.add_argument('--settings', help='Path to the settings json file')
     args = parser.parse_args()
     if not args.settings:
-        raise RuntimeError
+        raise RuntimeError('-h for help')
     if not exists(args.settings):
         raise FileNotFoundError
 
