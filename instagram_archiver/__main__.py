@@ -23,6 +23,7 @@ def main():
 
     for username in settings.usernames:
         profile = instaloader.Profile.from_username(loader.context, username)
+        old_metadata = None
         try:
             old_metadata = metadata.AccountMetadata.load(settings.save_path, username)
         except FileNotFoundError:
