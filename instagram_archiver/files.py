@@ -16,5 +16,4 @@ def create_folders(settings: metadata.Settings):
 def get_save_path(post: Post, settings: metadata.Settings) -> Path:
     time = post.date_utc
     month_name = time.strftime(MONTH_FORMAT).lower()
-    filename = '{}_{}'.format(time.strftime(TIME_IN_FILENAME_FORMAT), post.pcaption)
-    return Path(settings.save_path / post.owner_username / month_name / filename)
+    return Path(settings.save_path / post.owner_username / str(time.year) / month_name)
